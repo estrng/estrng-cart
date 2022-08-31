@@ -1,11 +1,17 @@
 import { Route, Routes as ReactRouters } from 'react-router-dom'
-import { Providers } from '../components/Providers'
+import { DefaultLayout } from '../layouts/DefaultLayout'
+import { Checkout } from '../pages/Checkout'
 import { Home } from '../pages/Home'
+import { Success } from '../pages/Success'
 
 export function Routes() {
   return (
     <ReactRouters>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<DefaultLayout />} >
+        <Route path="/" element={<Home />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/success" element={<Success />} />
+      </Route>
     </ReactRouters>
   )
 }

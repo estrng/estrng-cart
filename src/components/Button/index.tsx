@@ -1,6 +1,6 @@
 import { Container, Icon, Badge } from "./styles";
 import { ButtonHTMLAttributes } from "react";
-import { useCartContext } from "../../contexts/CartContext";
+import { useCartContext } from "../../contexts/Cart/hooks/useCartContext";
 
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
