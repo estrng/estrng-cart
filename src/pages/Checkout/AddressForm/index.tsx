@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { FaCreditCard, FaPiggyBank, FaMoneyCheck } from "react-icons/fa";
 import { useAddressFormContext } from "../../../contexts/AddressForm/hooks/useAddressFormContext"
 import ViaCep from "../../../services/apis/ViaCep";
 import {
@@ -18,16 +20,38 @@ import {
   State,
   StateSign,
   NumberContainer,
-  CityContainer
+  CityContainer,
+  SelectButton
 } from "./styles"
+
 
 type Props = {}
 
 export function AddressForm({ }: Props) {
-  const { register, handleSubmit, watch, setValue } = useAddressFormContext();
+  const [selected, setSelected] = useState({
+    credit: false,
+    debit: false,
+    money: false
+  })
+  const { getValues, register, handleSubmit, watch, setValue } = useAddressFormContext();
 
   const onSubmit = (data: any) => {
     console.log(data)
+  }
+
+  const onSelect = (paymentType: string) => {
+    const seletedObject = {
+      credit: paymentType === "credit",
+      debit: paymentType === "debit",
+      money: paymentType === "money",
+    }
+    setSelected(seletedObject)
+    setValue("payment", seletedObject)
+  }
+
+  const selectedStyles = {
+    border: '1px solid #8047F8',
+    background: '#EBE5F9'
   }
 
   watch((data, { name, type }) => {
@@ -141,9 +165,30 @@ export function AddressForm({ }: Props) {
             </Text>
           </Up>
           <Actions>
-            <button>1</button>
-            <button>1</button>
-            <button>1</button>
+            <SelectButton
+              type="button"
+              style={selected.credit ? selectedStyles : {}}
+              onClick={() => onSelect('credit')}
+            >
+              <FaCreditCard />
+              CARTÃO DE CRÉDITO
+            </SelectButton>
+            <SelectButton
+              type="button"
+              style={selected.debit ? selectedStyles : {}}
+              onClick={() => onSelect('debit')}
+            >
+              <FaMoneyCheck />
+              CARTÃO DE DÉBITO
+            </SelectButton>
+            <SelectButton
+              type="button"
+              style={selected.money ? selectedStyles : {}}
+              onClick={() => onSelect('money')}
+            >
+              <FaPiggyBank />
+              DINHEIRO
+            </SelectButton>
           </Actions>
         </Footer>
       </form>

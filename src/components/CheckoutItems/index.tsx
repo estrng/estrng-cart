@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { SelectedItem } from '../../@types/Operation';
 import { useCartContext } from '../../contexts/Cart/hooks/useCartContext';
 import { formatPrice } from '../../helpers';
@@ -25,10 +24,9 @@ interface CheckoutItemProps {
 }
 
 export function CheckoutItems({ items }: CheckoutItemProps) {
-  console.log(items);
-
-  const { updateCartAction, removeFromCartAction } = useCartContext();
+  const { updateCartAction, removeFromCartAction, clearCartAction } = useCartContext();
   const deliveryCost = 6.99;
+  const navigate = useNavigate();
 
   function handleQuantityChange(item: SelectedItem, quantity: number) {
     if (quantity < 1) {
@@ -49,6 +47,11 @@ export function CheckoutItems({ items }: CheckoutItemProps) {
   })
 
   const total = totalPrices.reduce((acc, curr) => acc + curr, 0)
+
+  const goToSuccess = () => {
+    navigate('/success')
+    clearCartAction()
+  }
 
   return <Container>
     {
@@ -82,10 +85,8 @@ export function CheckoutItems({ items }: CheckoutItemProps) {
       <Frame title='Entrega' value={deliveryCost} />
       <Frame title='Total' value={total + deliveryCost} last />
     </Total>
-    <Link to='/success'>
-      <ConfirmButton>
-        CONFIRMAR PEDIDO
-      </ConfirmButton>
-    </Link>
+    <ConfirmButton onClick={goToSuccess}>
+      CONFIRMAR PEDIDO
+    </ConfirmButton>
   </Container>;
 }

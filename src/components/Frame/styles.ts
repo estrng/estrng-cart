@@ -13,7 +13,6 @@ export const Container = styled.div<Props>`
   height: 91%;
   
   h4 {
-    font-family: 'Roboto';
     font-style: normal;
     font-weight: ${props => props.last ? 'bold' : '400'};
     font-size: 14px;
@@ -22,7 +21,6 @@ export const Container = styled.div<Props>`
   }
   
   span {
-    font-family: 'Roboto';
     font-style: normal;
     font-weight: ${props => props.last ? 'bold' : '400'};
     font-size: 14px;

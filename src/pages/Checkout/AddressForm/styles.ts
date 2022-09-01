@@ -76,6 +76,9 @@ export const Actions = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
+  gap: 16px;
+  margin: 16px;
+  padding: 4px;
 `;
 
 export const Fileds = styled.div`
@@ -305,4 +308,32 @@ export const CityContainer = styled.div`
   width: 80%;
   height: 100%;
   gap: 12px;
+`;
+
+export const SelectButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: baseline;
+  padding: 14px;
+  gap: 8px;
+  width: 100%;
+  height: 51px;
+  background: #E6E5E5;
+  border-radius: 6px;
+  border: 1px solid #E6E5E5;
+  cursor: pointer;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 160%;
+  text-transform: uppercase;
+  color: #574F4D;
+  transform: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background: #E6E5E5;
+    border: 1px solid #E6E5E5;
+  }
 `;

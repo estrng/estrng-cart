@@ -170,6 +170,12 @@ export const ConfirmButton = styled.button`
   text-transform: uppercase;
   color: #FFFFFF;
   font-stretch: 100;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background: #E6E5E5;
+    color: #4B2995;
+  }
 `;
 
 export const Trash = styled(FaTrash).attrs({

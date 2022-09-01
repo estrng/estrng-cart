@@ -23,6 +23,4 @@ export const FormContainer = styled.form`
   height: auto;
   left: 160px;
   top: 182px;
-
-  background: yellowgreen;
 `;
