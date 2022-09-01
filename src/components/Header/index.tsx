@@ -3,16 +3,26 @@ import estrngLogo from "../../assets/logo.svg";
 import { Button } from "../Button";
 import { Logo } from "../Logo";
 import { Location } from "../Location";
+import { Link } from "react-router-dom";
 
-function Header() {
+export function Header() {
+
+  function handleGoToCheckoutame() {
+
+  }
+
   return (
     <>
       <Nav>
         <NavContainer>
-          <Logo src={estrngLogo} />
+          <Link to="/">
+            <Logo src={estrngLogo} />
+          </Link>
           <Actions>
             <Location city="São Paulo" />
-            <Button hasBadge={true} />
+            <Link to='/checkout'>
+              <Button hasBadge={true} />
+            </Link>
           </Actions>
         </NavContainer>
       </Nav>
@@ -20,5 +30,4 @@ function Header() {
   );
 };
 
-export default Header;
 // TODO: get geo location and show city name in header

@@ -1,6 +1,5 @@
 import { CartState } from "../../@types/Cart";
 import { CartActionTypes } from "./actions";
-import { v4 as uuidv4 } from 'uuid';
 import { produce } from 'immer';
 
 export function CartReducer(state: CartState, action: any) {
@@ -10,10 +9,16 @@ export function CartReducer(state: CartState, action: any) {
         draft.items.push(action.payload);
       });
     case CartActionTypes.REMOVE_FROM_CART:
-      return {
-        id: state.id,
-        items: [...state.items.filter(item => item.operation_id !== action.payload.operation_id)]
-      };
+      return produce(state, ({ items }) => {
+        items.splice(items.findIndex(item => item.operation_id === action.payload), 1);
+      });
+    case CartActionTypes.UPDATE_CART:
+      return produce(state, (draft) => {
+        const indexToBeUpdated = draft.items.findIndex(
+          (item) => item.operation_id === action.payload.operation_id
+        );
+        draft.items[indexToBeUpdated] = action.payload;
+      });
     case CartActionTypes.EMPTY_CART:
       return {
         id: state.id,

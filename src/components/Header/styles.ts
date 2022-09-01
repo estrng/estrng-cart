@@ -49,9 +49,6 @@ export const Actions = styled.div`
   width: 193px;
   height: 38px;
 
-
-  /* Inside auto layout */
-
   flex: none;
   order: 1;
   flex-grow: 0;

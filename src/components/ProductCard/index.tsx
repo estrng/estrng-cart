@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Coffee } from '../../@types/Coffee';
 import { SelectedItem } from '../../@types/Operation';
-import { useCartContext } from '../../contexts/CartContext';
-import { CartActionTypes } from '../../reducers/Cart/actions';
+import { useCartContext } from '../../contexts/Cart/hooks/useCartContext';
+import { formatPrice } from '../../helpers';
 import { Button } from '../Button';
 import {
   Container,
@@ -22,21 +22,13 @@ interface ProductCardProps extends Coffee { }
 
 export function ProductCard({ id, ilustration, description, tag, name, price }: ProductCardProps) {
   const [quantity, setQuantity] = useState(1);
+  const [priceToShow, setPriceToShow] = useState(price);
   const { addToCartAction } = useCartContext();
-
-  function formatPrice(price: number) {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(price);
-  }
 
   function handleQuantityChange(value: number) {
     if (value < 1) {
       setQuantity(1);
-    } else {
-      setQuantity(value);
-    }
+    } else { setQuantity(value) }
   }
 
   function handleAddToCart() {
@@ -52,14 +44,17 @@ export function ProductCard({ id, ilustration, description, tag, name, price }: 
         id
       }
     } as SelectedItem);
+    setQuantity(1);
   }
+
+  useEffect(() => {
+    setPriceToShow(price * quantity);
+  }, [quantity]);
 
   return <Container>
     <Ilustration src={ilustration} />
     <TagContainer>
-      {
-        tag && tag.map(tag => <Tag key={tag}>{tag}</Tag>)
-      }
+      {tag && tag.map(tag => <Tag key={tag}>{tag}</Tag>)}
     </TagContainer>
 
     <TextContainer>
@@ -68,7 +63,7 @@ export function ProductCard({ id, ilustration, description, tag, name, price }: 
     </TextContainer>
 
     <BuyInContainer>
-      <Price>{formatPrice(quantity * price)}</Price>
+      <Price>{formatPrice(priceToShow)}</Price>
       <Quantity>
         <button onClick={() => handleQuantityChange(quantity - 1)}>-</button>
         <span>{quantity}</span>
